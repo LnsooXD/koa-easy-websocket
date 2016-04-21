@@ -1,5 +1,5 @@
 {
-  "name": "iooly-webcosket",
+  "name": "iooly-websocket",
   "version": "1.0.0",
   "description": "简化的 koa-socket, 同时带上session",
   "main": "webcosket.js",
