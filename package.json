@@ -1,0 +1,27 @@
+{
+  "name": "iooly-webcosket",
+  "version": "1.0.0",
+  "description": "简化的 koa-socket, 同时带上session",
+  "main": "webcosket.js",
+  "scripts": {
+    "test": "node ./tests/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@code.iooly.net:/node_modules/iooly-webcosket.git"
+  },
+  "publishConfig": {
+    "registry": "https://maven.iooly.net:8089/nexus/content/repositories/inpm/"
+  },
+  "keywords": [
+    "koa",
+    "webcosket"
+  ],
+  "author": "zsl@kuba.bz",
+  "license": "MIT",
+  "dependencies": {
+    "cookies": "^0.6.1",
+    "koa-compose": "^2.4.0",
+    "koa-socket": "^4.3.0"
+  }
+}
