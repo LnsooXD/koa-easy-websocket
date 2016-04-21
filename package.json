@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@code.iooly.net:/node_modules/iooly-webcosket.git"
+    "url": "git@code.iooly.net:/node_modules/iooly-websocket.git"
   },
   "publishConfig": {
     "registry": "https://maven.iooly.net:8089/nexus/content/repositories/inpm/"
