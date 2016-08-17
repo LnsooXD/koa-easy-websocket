@@ -1,6 +1,6 @@
 {
   "name": "iooly-websocket",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "简化的 koa-socket, 同时带上session",
   "main": "webcosket.js",
   "scripts": {

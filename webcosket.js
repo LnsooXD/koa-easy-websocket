@@ -39,7 +39,9 @@ exports = module.exports = class WebSocket {
 		io.use(session(app, app.session));
 
 		cutils.each(this.config, (k, v)=> {
-			let event = loadLib(path.join(this.dir, v));
+			let builer = loadLib(path.join(this.dir, v));
+			let event = new Event(k);
+			builer(event);
 			io.on(k, co.wrap(function *(ctx, msg) {
 				yield event.onMessage(ctx, msg);
 			}));
@@ -67,10 +69,6 @@ exports = module.exports = class WebSocket {
 		return new WebSocket(app, options);
 	}
 
-	static newEvent() {
-		return new Event();
-	}
-
 };
 
 function wrap(middleware) {
@@ -82,5 +80,3 @@ function wrap(middleware) {
 		}
 	});
 }
-
-
