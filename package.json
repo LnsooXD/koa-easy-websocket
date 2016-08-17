@@ -8,10 +8,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@code.iooly.net:/node_modules/iooly-websocket.git"
+    "url": "git@git.lnsoo.com:node_modules/iooly-websocket.git"
   },
   "publishConfig": {
-    "registry": "https://maven.iooly.net:8089/nexus/content/repositories/inpm/"
+    "registry": "https://repo.lnsoo.com/nexus/content/repositories/inpm/"
   },
   "keywords": [
     "koa",
