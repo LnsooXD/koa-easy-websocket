@@ -22,7 +22,7 @@
   "dependencies": {
     "cookies": "^0.6.1",
     "koa-compose": "^2.4.0",
-    "koa-socket": "^4.3.0",
+    "koa-socket": "^4.4.0",
     "koa-socket-session": "^1.0.1"
   }
 }
