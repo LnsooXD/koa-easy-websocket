@@ -1,6 +1,6 @@
 {
   "name": "koa-easy-websocket",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "a easy-using koa websocket framework based on koa-socket",
   "main": "webcosket.js",
   "scripts": {
