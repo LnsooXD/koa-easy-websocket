@@ -1,4 +1,11 @@
 "use strict";
+
+/*!
+ * koa-easy-websocket - webcosket.js
+ * Copyright(c) 2016 LnsooXD
+ * MIT Licensed
+ */
+
 const path = require('path');
 const Event = require('./lib/event');
 const session = require('koa-socket-session');
