@@ -1,22 +1,20 @@
 "use strict";
-if (typeof loadLib === 'undefined') {
-	require('iooly-cornerstone');
-}
-const path = loadLib('path');
-const Event = loadLib('./lib/event');
-const session = loadLib('koa-socket-session');
+const path = require('path');
+const Event = require('./lib/event');
+const session = require('koa-socket-session');
 const IO = require('koa-socket');
-const cutils = loadLib('cutils');
-const co = cutils.co;
+const it = require('ctrl-it');
+const co = require('co');
+const is = require('is-type-of');
 
 exports = module.exports = class WebSocket {
 	constructor(app, options) {
-		if (cutils.is.nullOrUndefined(options)) {
+		if (is.nullOrUndefined(options)) {
 			options = {};
 		}
 		let namespace = options['namespace'];
 		let io;
-		if (cutils.is.string(namespace)) {
+		if (is.string(namespace)) {
 			io = new IO({namespace: namespace});
 		} else {
 			io = new IO();
@@ -38,7 +36,7 @@ exports = module.exports = class WebSocket {
 
 		io.use(session(app, app.session));
 
-		cutils.each(this.config, (k, v)=> {
+		it.each(this.config, (k, v)=> {
 			let builer = loadLib(path.join(this.dir, v));
 			let event = new Event(k);
 			builer(event);
