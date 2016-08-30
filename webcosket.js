@@ -44,7 +44,7 @@ exports = module.exports = class WebSocket {
 		io.use(session(app, app.session));
 
 		it.each(this.config, (k, v)=> {
-			let builer = loadLib(path.join(this.dir, v));
+			let builer = require(path.join(this.dir, v));
 			let event = new Event(k);
 			builer(event);
 			io.on(k, co.wrap(function *(ctx, msg) {
