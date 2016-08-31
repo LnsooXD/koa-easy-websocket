@@ -1,5 +1,5 @@
 # koa-easy-websocket
-A easy-using koa websocket framework based on koa-socket
+A easy-using koa websocket framework based on [koa-socket.io](https://github.com/LnsooXD/koa-socket.io)
 
 ## Installation
 ```sh

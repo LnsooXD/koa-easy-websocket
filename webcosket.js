@@ -9,79 +9,55 @@
 const path = require('path');
 const Event = require('./lib/event');
 const session = require('koa-socket-session');
-const IO = require('koa-socket');
+const IO = require('koa-socket.io');
 const it = require('ctrl-it');
 const co = require('co');
 const is = require('is-type-of');
+const debug = loadLib('debug')('koa-easy-websocket:webcosket.js');
 
 exports = module.exports = class WebSocket {
-	constructor(app, options) {
-		if (is.nullOrUndefined(options)) {
-			options = {};
-		}
-		let namespace = options['namespace'];
-		let io;
-		if (is.string(namespace)) {
-			io = new IO({namespace: namespace});
-		} else {
-			io = new IO();
-		}
-		this.dir = options['dir'];
-		this.session = options['session'];
-		this.config = options['config'];
-		this.namespace = namespace;
-		this.io = io;
-		this.app = app;
+    constructor(app, options) {
+        if (is.nullOrUndefined(options)) {
+            options = {};
+        }
+        let namespace = options['namespace'];
+        let io;
+        if (is.string(namespace)) {
+            io = new IO({namespace: namespace});
+        } else {
+            io = new IO();
+        }
+        this.dir = options['dir'];
+        this.config = options['config'];
+        this.namespace = namespace;
+        this.io = io;
+        this.app = app;
 
-		io.on('connection', ctx => {
-			console.log('Join event', ctx.socket.id);
-		});
+        io.use(session(app, app.session));
 
-		io.on('disconnect', ctx => {
-			console.log('Leave event', ctx.socket.id);
-		});
+        it.each(this.config, (k, v)=> {
+            let builer = require(path.join(this.dir, v));
+            let event = new Event(k);
+            builer(event);
+            io.on(k, function *(next) {
+                yield event.onMessage(this, this.data);
+                yield next;
+            });
+        });
 
-		io.use(session(app, app.session));
+        app.websocket = this;
+    }
 
-		it.each(this.config, (k, v)=> {
-			let builer = require(path.join(this.dir, v));
-			let event = new Event(k);
-			builer(event);
-			io.on(k, co.wrap(function *(ctx, msg) {
-				yield event.onMessage(ctx, msg);
-			}));
-		});
+    attach(server) {
+        this.io.start(server);
+    }
 
-		app.websocket = this;
-	}
+    broadcast(event, msg) {
+        this.io.broadcast(event, msg);
+    }
 
-	attach(server) {
-		this.session = this.app.session;
-		this.app.server = server;
-		this.io.attach(this.app);
-	}
-
-	broadcast(event, msg) {
-		this.io.broadcast(event, msg);
-	}
-
-	use(middleware) {
-		this.io.use(wrap(middleware));
-		return this;
-	}
-
-	static newWebSocket(app, options) {
-		return new WebSocket(app, options);
-	}
-
+    use(middleware) {
+        this.io.use(middleware);
+        return this;
+    }
 };
-
-function wrap(middleware) {
-	return co.wrap(function *(ctx, next) {
-		try {
-			yield middleware.call(ctx, next);
-		} catch (e) {
-			console.log(e);
-		}
-	});
-}
