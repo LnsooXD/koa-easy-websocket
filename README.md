@@ -69,7 +69,7 @@ function messageHandle(action, data) {
 
 ```
 
-##Authors
+## Authors
 
 - [LnsooXD](https://github.com/LnsooXD)
 
